@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block script %}
+    <script src="/static/tasks.js"></script>
+{% endblock %}
+
+{% block title %}
+    Planner
+{% endblock %}
+
+{% block main %}
+    <main class="container">
+        <h2>
+            To-Do List
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <a href="/completefilter" class="btn btn-primary small-link">Completed</a>
+                <a href="/taskfilter" class="btn btn-primary small-link">Open Tasks</a>
+                <a href="/tasks" class="btn btn-primary small-link">All</a>
+            </div>
+        </h2>
+        <div class="container">
+            <div class="col-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Task Description</th>
+                            <th>Date</th>
+                            <th class="text-center">Completed?</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                    <!--Loop through the database entries to display them in this table -->
+                        {% for task in tasks %}
+                            <tr>
+                                <td>{{ task.description }} </td>
+                                <td>{{ task.start_time | format_date}} </td>
+                                <td class="text-center"><div class="form-check"><input class="form-check-input checkbox" autocomplete="off" type="checkbox" id="{{ task.id }}" {{"checked" if task.completed }}></div></td>
+                                <td><form method="post" action="/delete/{{ task.id }}"><button type="submit" class="btn btn-danger">Delete</button></form></td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <form action="/add" method="post">
+                                <td><input class="form-control" type="text" name="description" placeholder="Task description" autocomplete="off"></td>
+                                <td><input class="form-control" type="text" name="date" autocomplete="off" placeholder="date (MM/DD)"></td>
+                                <td></td>
+                                <td><button type="submit" class="btn btn-primary mb-2">Add</button></td>
+                            </form>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

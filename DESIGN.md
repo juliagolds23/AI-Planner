@@ -1,0 +1,13 @@
+I implemented this project using openAI's chat completion API. The primary purpose of this project was to use the API to help users schedule their tasks, and was designed to center around that. I've actually used chat GPT for this exact purpose, and it's been extremely helpful. As I was running into roadblocks with my first idea, I realized it would be great to create a project that could streamline something I do every day (plan my day), and help others do the same. 
+
+The first implementation had the API read input from a task list, and return a json file that could be read by the calendar template. I realized (although this is less complex), it's far more interesting and useful to be able to brain dump into one paragraph format. I was able to construct the prompt and the response "schema" for the request, so that it would return its response in a specific json format that could be easily read (as a dictionary) into a table, and therefore read into the calendar.
+
+This turned out to be more difficult than planned, as OpenAI returned times in different formats almost every time, which impacted my ability to consistently parse those event times into formats which could be displayed by the calendar. After a lot of tinkering with the specifics of the prompts and schema description, I was able to get a consistent response.
+
+After getting a properly formatted response from the request, I format that information (combine response times with current date) and store it in a tasks table, which in turn supplies the data for the daily calendar, the weekly calendar, and the task checklist page. 
+
+The daily calendar retrieves the scheduled events from the currently selected date and displays them in a single-day calendar. Switching days using the top toolbar changes the selected date and refreshes the calendar with the scheduled tasks for that date. The currently selected date is stored in the session and defaults to the current date when opening the app.
+
+The weekly calendar page retrieves all scheduled tasks in a user's history and displays them in a single weekly view at once.
+
+The task checklist page displays all task history in a list format, and allows users to mark tasks as completed. There is also an add task functionality which inserts a new task into the table in the circumstance that a user missed something while scheduling their day. Users can also filter data based on the "completed status" (whether the checkbox is checked) and delete task items.

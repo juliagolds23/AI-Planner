@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block script %}
+    <script>
+        const tasks = JSON.parse({{ scheduled_tasks | tojson }});
+    </script>
+    <script src="/static/weekscript.js"></script>
+{% endblock %}
+
+{% block title %}
+    Planner
+{% endblock %}
+
+{% block main %}
+    <main class="container">
+        <div class="vh-100" id="calendar"></div>
+    </main>
+{% endblock %}
+ 

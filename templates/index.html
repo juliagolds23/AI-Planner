@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block script %}
+    <script>
+        const tasks = JSON.parse({{ scheduled_tasks | tojson }});
+        const date = JSON.parse({{ current_date | tojson }});
+    </script>
+    <script src="/static/script.js"></script>
+{% endblock %}
+
+{% block title %}
+    Planner
+{% endblock %}
+
+{% block main %}
+    <main class="container">
+        <ul class="nav justify-content-center my-3">
+            <li class="nav-item">
+                <form action="/prevday" method="post"><button type="submit" class="nav-link active">Prev Day</button></form>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link disabled">{{ readable_date }}</a>
+            </li>
+            <li class="nav-item">
+                <form action="/nextday" method="post"><button type="submit" class="nav-link active">Next Day</button></form>
+            </li>
+          </ul>
+        <div class="row">
+            <div class="col-6 px-5">
+                <form action="/generate" method="post">
+                    <div class="form-group my-2">
+                        <label for="description">What do you need to do today?</label>
+                        <textarea class="form-control my-2" id="description" name="description" rows="5" placeholder = "Describe your tasks here, in as much detail as you want. Feel free to provide additional information."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary mb-2">Generate Schedule</button>
+                </form>
+            </div>
+            <div class="col-6 px-5">
+                <div class="vh-100" id="calendar"></div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
